@@ -1,0 +1,219 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    "Open Sans",
+    "Helvetica Neue",
+    sans-serif;
+}
+
+main {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  max-width: 600px;
+  width: 100%;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.preview {
+  width: 100%;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  color: darkorchid;
+}
+
+.btn.active {
+  color: darkorchid;
+  border-bottom: 2px solid darkorchid;
+}
+
+.status_indicator {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  padding: 15px;
+  border-radius: 45px;
+  background-color: #f8f9fa;
+}
+
+.status_indicator.active {
+  display: flex;
+}
+
+.status_indicator.success.active .status_indicator--icon {
+  opacity: 0;
+  transform: scale(0);
+  animation: success-icon 0.3s ease forwards;
+}
+
+.status_indicator.warning.active .status_indicator--icon {
+  animation: warning-icon 0.2s ease 0.1s forwards;
+}
+
+.status_indicator--text {
+  opacity: 0;
+}
+
+.status_indicator.active .status_indicator--text {
+  animation: text-appear-from-left 0.4s ease-out 0.1s forwards;
+}
+
+.status_indicator.success.active .status_indicator--text,
+.status_indicator.warning.active .status_indicator--text {
+  animation: text-appear-from-right 0.4s ease-out 0.1s forwards;
+}
+
+.status_indicator.loading {
+  color: #3b88e9;
+  background-color: #3b88e915;
+}
+
+.status_indicator.success {
+  color: #449d5d;
+  background-color: #449d5d15;
+}
+
+.status_indicator.warning {
+  color: #d17724;
+  background-color: #d1772415;
+}
+
+.loader {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #3b88e9;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation:
+    fast-spin 1s linear forwards,
+    slow-spin 1s linear infinite 1s;
+}
+
+@keyframes fast-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(360deg);
+  }
+
+  100% {
+    transform: rotate(720deg);
+  }
+}
+
+@keyframes slow-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Animation for text */
+@keyframes text-appear-from-right {
+  0% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes text-appear-from-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes success-icon {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes warning-icon {
+  0% {
+    transform: scale(1) translate(0, 0);
+  }
+  20% {
+    transform: scale(1) translate(2px, -2px);
+  }
+  40% {
+    transform: scale(1) translate(-2px, 2px);
+  }
+  60% {
+    transform: scale(1) translate(2px, 2px);
+  }
+  80% {
+    transform: scale(1) translate(-2px, -2px);
+  }
+  100% {
+    transform: scale(1) translate(0, 0);
+  }
+}
+

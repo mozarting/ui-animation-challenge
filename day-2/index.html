@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+      Peerlist UI Animation Challenge Day 2 | Dynamic Status Indicator
+    </title>
+    <link href="style.css" rel="stylesheet" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+  </head>
+  <body>
+    <main>
+      <div class="container">
+        <div class="button-group">
+          <button class="btn" data-state="loading">Loading</button>
+          <button class="btn" data-state="success">Success</button>
+          <button class="btn" data-state="warning">Warning</button>
+        </div>
+
+        <div class="preview">
+          <div class="status_indicator loading" data-state="loading">
+            <span class="loader"></span>
+            <p class="status_indicator--text">Analyzing Transaction</p>
+          </div>
+          <div class="status_indicator success" data-state="success">
+            <i class="status_indicator--icon" data-lucide="circle-check"></i>
+            <p class="status_indicator--text">Transaction Safe</p>
+          </div>
+          <div class="status_indicator warning" data-state="warning">
+            <i class="status_indicator--icon" data-lucide="triangle-alert"></i>
+            <p class="status_indicator--text">Transaction warning</p>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script>
+      lucide.createIcons();
+
+      const buttons = document.querySelectorAll(".btn");
+      const indicators = document.querySelectorAll(".status_indicator");
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const state = button.dataset.state;
+
+          buttons.forEach((btn) => btn.classList.remove("active"));
+          indicators.forEach((ind) => ind.classList.remove("active"));
+
+          button.classList.add("active");
+          document
+            .querySelector(`.status_indicator[data-state="${state}"]`)
+            .classList.add("active");
+        });
+      });
+
+      document.querySelector('.btn[data-state="loading"]').click();
+    </script>
+  </body>
+</html>
+
