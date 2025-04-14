@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Peerlist UI Animation Challenge Day 3 | Animated Checkboxes</title>
+  <link href="style.css" rel="stylesheet" />
+</head>
+
+<body>
+  <main>
+    <div class="window">
+      <div class="window-bar">
+        <div class="window-actions">
+          <div class="window-action close"></div>
+          <div class="window-action minimize"></div>
+          <div class="window-action fullscreen"></div>
+        </div>
+        <div class="window-title">lol</div>
+      </div>
+      <div class="todo-container">
+        <div class="todo">
+          <div class="checkbox">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 12l5 5L20 7" />
+            </svg>
+          </div>
+          <label class="todo-text"><span class="strike"></span>Buy Groceries</label>
+        </div>
+        <div class="todo">
+          <div class="checkbox">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 12l5 5L20 7" />
+            </svg>
+          </div>
+          <label class="todo-text"><span class="strike"></span>Conteplate existence</label>
+        </div>
+        <div class="todo">
+          <div class="checkbox">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 12l5 5L20 7" />
+            </svg>
+          </div>
+          <label class="todo-text"><span class="strike"></span>Learn SwiftUI</label>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.querySelectorAll(".todo").forEach((todo) => {
+      todo.classList.add("unchecked")
+      todo.addEventListener("click", () => {
+        todo.classList.toggle("checked");
+        todo.classList.toggle("unchecked");
+      });
+    });
+  </script>
+</body>
+
+</html>
