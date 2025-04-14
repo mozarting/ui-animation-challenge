@@ -33,6 +33,14 @@ main {
   overflow: hidden;
 }
 
+@media only screen and (max-width: 430px) {
+  .window {
+    min-width: auto;
+    width: 100%;
+    margin-inline: 16px;
+  }
+}
+
 .window-bar {
   display: flex;
   align-items: center;
@@ -104,8 +112,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition:
-    background-color 0.5s ease-in;
+  transition: background-color 0.5s ease-in;
   background-color: white;
 }
 
@@ -188,3 +195,4 @@ main {
     transform: translateX(0px);
   }
 }
+
