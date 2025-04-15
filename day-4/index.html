@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Peerlist UI Animation Challenge Day 4 | Animated Toggles</title>
+    <link href="style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <main>
+      <div class="tabs">
+        <div id="highlight" class="highlight"></div>
+        <div class="tab active" data-index="0">
+          <div>Free</div>
+        </div>
+        <div class="tab" id="tab2" data-index="1">
+          <div class="tab-inner">Premium</div>
+          <div class="sub-tabs">
+            <div id="subhighlight" class="subhighlight"></div>
+            <span class="sub-tab active" data-index="0">Monthly</span>
+            <span class="sub-tab" data-index="1">Annual</span>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script>
+      const tabs = document.querySelectorAll(".tab");
+      const tab2 = document.getElementById("tab2");
+      const highlight = document.getElementById("highlight");
+      const subhighlight = document.getElementById("subhighlight");
+      const subtabs = document.querySelectorAll(".sub-tab");
+
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          const index = tab.dataset.index;
+          highlight.style.transform = `translateX(${index * 100}%)`;
+          tabs.forEach((btn) => btn.classList.remove("active"));
+          tab.classList.toggle("active");
+
+          if (index === "1") {
+            tab2.classList.add("tab2-active");
+          } else {
+            tab2.classList.remove("tab2-active");
+          }
+        });
+      });
+
+      subtabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          const index = tab.dataset.index;
+          subhighlight.style.transform = `translateX(${index * 100}%)`;
+          subtabs.forEach((btn) => btn.classList.remove("active"));
+          tab.classList.toggle("active");
+        });
+      });
+    </script>
+  </body>
+</html>
