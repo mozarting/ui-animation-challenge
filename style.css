@@ -1,0 +1,40 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: system-ui;
+}
+main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+ol li {
+  margin-bottom: 2em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  align-items: center;
+}
+h1 {
+  text-align: center;
+  padding: 1em;
+}
+iframe {
+  height: 400px;
+  min-width: 500px;
+  /* border: 1px solid #ccc; */
+  border-radius: 10px;
+  margin-inline: 1em;
+}
+@media only screen and (max-width: 430px) {
+  iframe {
+    min-width: auto;
+    width: 100%;
+  }
+}
