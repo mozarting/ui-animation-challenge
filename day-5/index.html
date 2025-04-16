@@ -86,14 +86,12 @@
           card.getAnimations().forEach((anim) => anim.cancel());
         });
 
-        // Store current positions and transforms
+        // Get current and target positions
         const positions = Array.from(cards).map((card) => {
           const rect = card.getBoundingClientRect();
-          const computedStyle = getComputedStyle(card);
           return {
             element: card,
             current: rect,
-            currentTransform: computedStyle.transform,
           };
         });
 
@@ -110,13 +108,7 @@
         positions.forEach((pos) => {
           const dx = pos.current.left - pos.target.left;
           const dy = pos.current.top - pos.target.top;
-          // Apply only if not in pack view to prevent bouncing
-          if (targetState !== "pack-view") {
-            pos.element.style.transform = `translate(${dx}px, ${dy}px)`;
-          } else {
-            // For pack view, reset to avoid jumping
-            pos.element.style.transform = "none";
-          }
+          pos.element.style.transform = `translate(${dx}px, ${dy}px)`;
           pos.element.style.transition = "none";
         });
 
@@ -125,31 +117,18 @@
 
         // Animate to new position
         positions.forEach((pos) => {
-          const animationOptions = {
-            duration: 500,
-            easing: "ease-in-out",
-            fill: "forwards",
-          };
-
-          if (targetState === "pack-view") {
-            // In pack view, rely on CSS transforms for final positioning
-            pos.element.animate(
-              [
-                { transform: pos.currentTransform || "none" },
-                { transform: "none" }, // CSS handles the final transform
-              ],
-              animationOptions,
-            );
-          } else {
-            pos.element.animate(
-              [
-                { transform: pos.element.style.transform || "none" },
-                { transform: "translate(0, 0)" },
-              ],
-              animationOptions,
-            );
-          }
-          pos.element.style.transition = "opacity 0.5s ease"; // Limit transition to opacity
+          pos.element.animate(
+            [
+              { transform: pos.element.style.transform },
+              { transform: "translate(0, 0)" },
+            ],
+            {
+              duration: 500,
+              easing: "ease-in-out",
+              fill: "forwards",
+            },
+          );
+          pos.element.style.transition = "all 0.5s ease";
           pos.element.style.transform = "";
         });
       }
