@@ -26,13 +26,13 @@ h1 {
   padding: 1em;
 }
 iframe {
-  height: 400px;
-  min-width: 500px;
-  /* border: 1px solid #ccc; */
+  height: 500px;
+  min-width: 700px;
+  border: 1px solid #ccc;
   border-radius: 10px;
   margin-inline: 1em;
 }
-@media only screen and (max-width: 430px) {
+@media only screen and (max-width: 734px) {
   iframe {
     min-width: auto;
     width: 100%;

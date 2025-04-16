@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Peerlist UI Animation Challenge Day 5 | Shared Layout Tabs</title>
+    <link href="style.css" rel="stylesheet" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+  </head>
+  <body>
+    <main>
+      <div class="container">
+        <div class="tab-group">
+          <button class="tab flex active" data-state="list-view">
+            <i data-lucide="list"></i>
+            <span>List View</span>
+          </button>
+          <button class="tab flex" data-state="card-view">
+            <i class="icon" data-lucide="layout-grid"></i>
+            <span>Card View</span>
+          </button>
+          <button class="tab flex" data-state="pack-view">
+            <i class="icon" data-lucide="group"></i>
+            <span>Pack View</span>
+          </button>
+        </div>
+        <hr />
+        <div class="content list-view" id="content">
+          <div class="content-info">
+            <h2>2 Collectibles</h2>
+            <p>1.064 ETH</p>
+          </div>
+          <div class="card" id="card-1">
+            <img
+              src="./images/skilled-fingers-Btu9a5qQ.svg"
+              alt="fingers"
+              class="card-image"
+            />
+            <div class="card-info">
+              <h2 class="card-title">Skilled Fingers Series</h2>
+              <div class="flex">
+                <div class="card-price flex">
+                  <span class="amount">0.855</span>
+                  <span class="currency">ETH</span>
+                </div>
+                <div class="card-rank flex">
+                  <img src="./images/download.svg" alt="some icon" />
+                  <span>#209</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card" id="card-2">
+            <img
+              src="./images/vibrant-vibes-DFW-R18t.svg"
+              alt="fingers"
+              class="card-image"
+            />
+            <div class="card-info">
+              <h2 class="card-title">Vibrant Vibes Series</h2>
+              <div class="flex">
+                <div class="card-price flex">
+                  <span class="amount">0.855</span>
+                  <span class="currency">ETH</span>
+                </div>
+                <div class="card-rank flex">
+                  <img src="./images/download.svg" alt="some icon" />
+                  <span>#209</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script>
+      lucide.createIcons();
+
+      const tabs = document.querySelectorAll(".tab");
+      const content = document.getElementById("content");
+      const cards = document.querySelectorAll(".card");
+
+      function animateCards(targetState) {
+        // Reset any ongoing animations
+        cards.forEach((card) => {
+          card.getAnimations().forEach((anim) => anim.cancel());
+        });
+
+        // Store current positions and transforms
+        const positions = Array.from(cards).map((card) => {
+          const rect = card.getBoundingClientRect();
+          const computedStyle = getComputedStyle(card);
+          return {
+            element: card,
+            current: rect,
+            currentTransform: computedStyle.transform,
+          };
+        });
+
+        // Apply the target class to get new positions
+        content.classList.remove("list-view", "card-view", "pack-view");
+        content.classList.add(targetState);
+
+        // Get new positions after class change
+        positions.forEach((pos) => {
+          pos.target = pos.element.getBoundingClientRect();
+        });
+
+        // Invert to starting position
+        positions.forEach((pos) => {
+          const dx = pos.current.left - pos.target.left;
+          const dy = pos.current.top - pos.target.top;
+          // Apply only if not in pack view to prevent bouncing
+          if (targetState !== "pack-view") {
+            pos.element.style.transform = `translate(${dx}px, ${dy}px)`;
+          } else {
+            // For pack view, reset to avoid jumping
+            pos.element.style.transform = "none";
+          }
+          pos.element.style.transition = "none";
+        });
+
+        // Force reflow
+        content.offsetHeight;
+
+        // Animate to new position
+        positions.forEach((pos) => {
+          const animationOptions = {
+            duration: 500,
+            easing: "ease-in-out",
+            fill: "forwards",
+          };
+
+          if (targetState === "pack-view") {
+            // In pack view, rely on CSS transforms for final positioning
+            pos.element.animate(
+              [
+                { transform: pos.currentTransform || "none" },
+                { transform: "none" }, // CSS handles the final transform
+              ],
+              animationOptions,
+            );
+          } else {
+            pos.element.animate(
+              [
+                { transform: pos.element.style.transform || "none" },
+                { transform: "translate(0, 0)" },
+              ],
+              animationOptions,
+            );
+          }
+          pos.element.style.transition = "opacity 0.5s ease"; // Limit transition to opacity
+          pos.element.style.transform = "";
+        });
+      }
+
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          if (tab.classList.contains("active")) return;
+
+          tabs.forEach((t) => t.classList.remove("active"));
+          tab.classList.add("active");
+
+          const state = tab.dataset.state;
+          animateCards(state);
+        });
+      });
+    </script>
+  </body>
+</html>
